@@ -1,0 +1,40 @@
+{% extends 'layouts/base.html' %}
+{% block titulo %}SigIn{% endblock %} 
+{% block contenido %}
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-6 ">
+                <h1> Edit Large Url</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 form-wrap p-5 m-0 rounded">
+                <form class="form-login" action="{{url_for('save_edit')}}" method="POST">
+                        <label for="large_url" class="mb-4 text-white h3">Large Url</label>
+                        <input type="hidden" name="id_path" value="{{id_path}}" />
+                        <input type="text" class="form-control mb-4" id="large_url" name="large_url" placeholder="Enter your url" value="{{large_url}}" required>
+                        <span>
+                            {{validation}}
+                        </span>
+                    <button type="submit" class="btn btn-lg btn-primary shadow rounded ">Save</button>
+                </form>
+            </div>
+        </div>
+       
+        <style>
+            .form-login{
+                border: 1;
+                background-color: #353D45;
+                margin: 0 auto;
+                width:100%
+            }
+            .form-wrap{
+                border: 1;
+                background-color: #353D45;
+            }
+            .sigup{
+                border: 1;
+                background-color: coral;
+            }
+
+        </style>
+{% endblock %}

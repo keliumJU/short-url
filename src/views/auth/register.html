@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html' %}
+{% block titulo %}Register{% endblock %} 
+{% block contenido %}
+<div class="row">
+    <div class="col">
+        {{validacion}}
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-sm-4 mx-auto form-wrap p-5 m-0 rounded">
+        <h1 class="mb-4 text-white">Join Now — It’s Free & Easy!</h1>
+        <form action="{{url_for('registerUser')}}" method="POST">
+                <input type="text" class="form-control mb-4" id="nombre" name="nombre" placeholder="Enter Name" required>
+                <input type="email" class="form-control mb-4" id="exampleInputEmail1" name="email_address" aria-describedby="emailHelp"
+                 placeholder="Enter Email">
+                <input type="password" class="form-control mb-4" id="inputPassword" name="password" placeholder="Enter Password">
+            <button type="submit" class="form-control btn-block btn btn-primary btn-lg col-sm-2 mb-2">Sing Up</button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4 mx-auto p-2 m-0 sigup text-center rounded login">
+        <a class="nav-link text-white h5" href="{{url_for('sigin')}}">Login</a>
+    </div>
+</div>
+<style>
+    .form-wrap{
+        border: 1;
+        background-color: #353D45
+    }
+    .login{
+        background-color: coral;
+    }
+</style>
+{% endblock %}

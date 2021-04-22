@@ -1,0 +1,43 @@
+{% extends 'layouts/base.html' %}
+{% block titulo %}ShortUrl{% endblock %} 
+{% block contenido %}
+
+<div class="row mt-5">
+    <div class="col p-3 m-2">
+        <h1>Manage Urls Shorts</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col p-3 m-2">
+        <table class="table table-url">
+            <thead>
+              <tr>
+                <th style="width: 4.66%;" scope="col">id</th>
+                <th style="width: 56.66%;" scope="col">long url</th>
+                <th style="width: 16.66%;" scope="col">short url</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for url in vals %}
+              <tr>
+                <td>{{url.id}}</td>
+                <td>{{url.path}}</td>
+                <td>{{host}}{{url.pathShort}}</td>
+                <td><a href="{{url_for('edit_path',id=url.id)}}" type="button" class="btn btn-info">Edit</a>
+                  <a href="{{url_for('delete_path',id=url.id)}}" type="button" class="btn btn-danger">Delete</a>
+                </td>
+
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
+<style>
+  .table-url{
+    table-layout: fixed;
+    word-wrap: break-word;
+  }
+</style>
+{% endblock %}

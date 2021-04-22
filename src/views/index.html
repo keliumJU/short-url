@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html' %} {% block titulo %} Inicio {% endblock %} 
+
+{% block contenido %}
+<div class="row mt-5">
+  <div class="col p-4 m-2 ">
+<h1>Short links, big results</h1>
+</div>
+</div>
+<div class="row">
+  <div class="col">
+    <strong>{{validation}}</strong>
+  </div>
+</div>
+<div class="row">
+<form action="{{url_for('home')}}" method="POST" style="background-color:#0b1736; color:white; font-size: larger;" 
+  class="m-3 p-4 rounded">
+    <div class="form-group">
+      <label for="short-path" class="mb-4">Shorten your link</label>
+      <input type="text" class="form-control" id="short-path" name="short-path" placeholder="Shorten your link">
+      <small id="short-path" class="form-text text-muted">
+          By clicking SHORTEN, you are agreeing to equipo7’s Terms of Service and Privacy Policy
+    </small>
+    </div>
+    <button type="submit" class="mt-4 btn btn-primary btn-lg">Shorten</button>
+  </form>
+</div>
+<div class="row">
+  <small id="process" class="h5 form-text process text-white m-3 p-4 rounded">
+      Procesando : {{short_url_display}}
+  </small>
+</div>
+<style>
+  .process{
+    background-color: #0b1736;
+  }
+</style>
+{% endblock %}
