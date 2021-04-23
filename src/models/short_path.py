@@ -51,5 +51,7 @@ class ShortPath(db.Model):
         path_update.path=path 
         db.session.commit()
 
+
+
 db.create_all()
 db.session.commit()

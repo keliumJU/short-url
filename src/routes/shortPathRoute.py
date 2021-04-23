@@ -1,3 +1,5 @@
+#controlador, #app, flask, response,dto, 
+from src.controllers.short import shortPathController 
 from src import app
 from flask import render_template, request, redirect, url_for, session
 from src.models.short_path import ShortPath
@@ -6,6 +8,10 @@ from src.dto.short_path import ShortPathDTO
 import random
 import string
 import os
+
+from src.logica_negocio.acortador import *
+
+shortController = shortPathController.ShortPathController()
 
 @app.route('/short_urls',methods=['GET'])
 def short_urls():
@@ -32,7 +38,8 @@ def home():
         url_received = request.form["short-path"]
         flag=False    
         if "user" in session:
-            found_url = ShortPath().get_path_by_user(url_received,session["id"]) 
+            #found_url = ShortPath().get_path_by_user(url_received,session["id"])  
+            found_url = shortController.get(url_received, session["id"])
             flag=True
         else:
             pass 
@@ -40,16 +47,28 @@ def home():
         if flag and found_url:
             return redirect(url_for("display_short_url", url=found_url.pathShort))
         else:
-            short_url = shorten_url()
+            #short_url = shorten_url()
             #print(short_url)
             #Recuperar la sesion para agregar el usuario
             if "user" in session:
+                #Algoritmo para acortar una url utilizando el patron de arquitectura SOLID
+                base=BaseLowShort(5)
+                acortadorAlgoBasic=AcortadorAlgoBasic(base)
+                findurlshort=FindUrlShort()
+                su=ShortUrl(acortadorAlgoBasic, session["id"], True, findurlshort)
+                short_url=su.sol()
+                #shortdto=ShortPathDTO(url_received,short_url,session["id"])
+                #new_url = ShortPath().add_path(shortdto)
                 shortdto=ShortPathDTO(url_received,short_url,session["id"])
-                new_url = ShortPath().add_path(shortdto)
+                new_url=shortController.create(shortdto)
             #para usuarios anonimos
-            session["short_url_test"]=short_url
-            session["long_url_test"]=url_received
-
+            else:
+                base=BaseLowShort(3)
+                acortadorAlgoBasic=AcortadorAlgoBasic(base)
+                su=ShortUrl(acortadorAlgoBasic)
+                short_url=su.sol()
+                session["short_url_test"]=short_url
+                session["long_url_test"]=url_received
             return redirect(url_for("display_short_url", url=short_url))
     else:
         return render_template('index.html')
@@ -83,7 +102,9 @@ def display_all():
     if "user" in session:
         id_user=session["id"]
         name_user=session["user"]
-        paths=ShortPath().get_all_by_user(id_user)
+        #paths=ShortPath().get_all_by_user(id_user)
+        paths=shortController.list(id_user)
+        #list por medio de controller aplicando SRP(responsablidad unica)
         return render_template('shortpath/short_url.html', vals=paths, host=host, login_exits=True, username=name_user)
 
 

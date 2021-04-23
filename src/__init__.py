@@ -11,5 +11,6 @@ app.permanent_session_lifetime=timedelta(minutes=30)
 from src.controllers import *
 from src.controllers.auth import user
 from src.controllers.short import *
+from src.routes import shortPathRoute
 def create_app():
     app.run(debug=True, port=5000)
